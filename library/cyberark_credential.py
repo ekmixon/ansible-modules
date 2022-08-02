@@ -204,17 +204,18 @@ def retrieveCredential(module):
     fail_request_on_password_change = module.params["fail_request_on_password_change"]
     client_cert = None
     client_key = None
-    
+
     if "client_cert" in module.params:
         client_cert = module.params["client_cert"]
     if "client_key" in module.params:
         client_key = module.params["client_key"]
 
-    end_point = "/AIMWebService/api/Accounts?AppId=%s&Query=%s&ConnectionTimeout=%s&QueryFormat=%s&FailRequestOnPasswordChange=%s" % (urllib.quote(app_id), urllib.quote(query), connection_timeout, query_format, fail_request_on_password_change)
-    
+    end_point = f"/AIMWebService/api/Accounts?AppId={urllib.quote(app_id)}&Query={urllib.quote(query)}&ConnectionTimeout={connection_timeout}&QueryFormat={query_format}&FailRequestOnPasswordChange={fail_request_on_password_change}"
+
+
     if "reason" in module.params and module.params["reason"] != None:
         reason = urllib.quote(module.params["reason"])
-        end_point = end_point + "&reason=%s" % reason
+        end_point = end_point + f"&reason={reason}"
 
     result = None
     response = None
